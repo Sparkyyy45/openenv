@@ -6,11 +6,13 @@ on:
     paths:
       - 'kits/**'
       - 'registry.json'
+      - '.github/workflows/verify-kits.yml'
   pull_request:
     branches: [main]
     paths:
       - 'kits/**'
       - 'registry.json'
+      - '.github/workflows/verify-kits.yml'
 
 jobs:
   # ── Validate registry.json ──────────────────────────────────────────────────
