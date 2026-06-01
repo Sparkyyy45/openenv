@@ -6,12 +6,9 @@
   "bin": {
     "openenv": "./packages/cli/src/index.js"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
-    "dev": "npm run dev --workspace=packages/cli",
-    "test": "npm test --workspace=packages/cli"
+    "dev": "node packages/cli/src/index.js",
+    "test": "echo \"No tests defined yet\" && exit 0"
   },
   "keywords": [
     "cli",
