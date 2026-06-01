@@ -1,0 +1,41 @@
+[
+  {
+    "name": "saas-nextjs-supabase-stripe",
+    "description": "Full SaaS starter: Next.js 14, Supabase auth+db, Stripe payments, Tailwind CSS",
+    "author": "openenv-core",
+    "tags": ["saas", "nextjs", "supabase", "stripe", "tailwind", "typescript"],
+    "repo": "https://github.com/openenv/openenv",
+    "template_path": "kits/saas-nextjs-supabase-stripe/template",
+    "verified": true,
+    "last_verified": "2026-06-01T00:00:00Z",
+    "version": "1.0.0",
+    "required_ports": [3000, 5432, 54321],
+    "tech": {
+      "frontend": "Next.js 14",
+      "database": "PostgreSQL via Supabase",
+      "auth": "Supabase Auth",
+      "payments": "Stripe",
+      "styling": "Tailwind CSS",
+      "language": "TypeScript"
+    }
+  },
+  {
+    "name": "api-fastapi-postgres-redis",
+    "description": "Production API: FastAPI, PostgreSQL, Redis, Docker, async SQLAlchemy",
+    "author": "openenv-core",
+    "tags": ["api", "fastapi", "postgres", "redis", "python", "docker"],
+    "repo": "https://github.com/openenv/openenv",
+    "template_path": "kits/api-fastapi-postgres-redis/template",
+    "verified": true,
+    "last_verified": "2026-06-01T00:00:00Z",
+    "version": "1.0.0",
+    "required_ports": [8000, 5432, 6379],
+    "tech": {
+      "framework": "FastAPI",
+      "database": "PostgreSQL",
+      "cache": "Redis",
+      "orm": "async SQLAlchemy",
+      "language": "Python 3.11"
+    }
+  }
+]

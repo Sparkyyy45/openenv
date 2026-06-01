@@ -1,0 +1,17 @@
+{
+  "name": "api-fastapi-postgres-redis",
+  "version": "1.0.0",
+  "description": "Production API: FastAPI, PostgreSQL, Redis, Docker, async SQLAlchemy",
+  "author": "openenv-core",
+  "required_ports": [8000, 5432, 6379],
+  "setup_commands": [
+    "pip install -r template/requirements.txt",
+    "docker-compose up -d",
+    "uvicorn template.main:app --reload"
+  ],
+  "health_check": {
+    "url": "http://localhost:8000/api/health",
+    "timeout_seconds": 15,
+    "expected_status": 200
+  }
+}

@@ -1,0 +1,111 @@
+version: '3.9'
+
+# ─── Network ──────────────────────────────────────────────────────────────────
+networks:
+  saas_network:
+    driver: bridge
+
+# ─── Volumes ──────────────────────────────────────────────────────────────────
+volumes:
+  supabase_db_data:
+  supabase_storage_data:
+
+# ─── Services ─────────────────────────────────────────────────────────────────
+services:
+
+  # ── Supabase PostgreSQL ────────────────────────────────────────────────────
+  supabase-db:
+    image: supabase/postgres:15.1.0.117
+    container_name: saas_supabase_db
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${SUPABASE_DB_PASSWORD:-postgres}
+      JWT_SECRET: ${SUPABASE_JWT_SECRET:-your-super-secret-jwt-token-with-at-least-32-characters-long}
+      JWT_EXP: 3600
+    volumes:
+      - supabase_db_data:/var/lib/postgresql/data
+    networks:
+      - saas_network
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Supabase API (PostgREST) ───────────────────────────────────────────────
+  supabase-api:
+    image: postgrest/postgrest:v11.2.0
+    container_name: saas_supabase_api
+    restart: unless-stopped
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    ports:
+      - '54321:3000'
+    environment:
+      PGRST_DB_URI: postgres://postgres:${SUPABASE_DB_PASSWORD:-postgres}@supabase-db:5432/postgres
+      PGRST_DB_SCHEMA: public,storage
+      PGRST_DB_ANON_ROLE: anon
+      PGRST_JWT_SECRET: ${SUPABASE_JWT_SECRET:-your-super-secret-jwt-token-with-at-least-32-characters-long}
+      PGRST_DB_USE_LEGACY_GUCS: 'false'
+    networks:
+      - saas_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3000/ready || exit 1']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Supabase Studio ───────────────────────────────────────────────────────
+  supabase-studio:
+    image: supabase/studio:20240101-8e4a94d
+    container_name: saas_supabase_studio
+    restart: unless-stopped
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    ports:
+      - '54323:3000'
+    environment:
+      SUPABASE_URL: http://supabase-api:3000
+      STUDIO_PG_META_URL: http://supabase-db:5432
+      POSTGRES_PASSWORD: ${SUPABASE_DB_PASSWORD:-postgres}
+    networks:
+      - saas_network
+
+  # ── Next.js App ────────────────────────────────────────────────────────────
+  app:
+    build:
+      context: ./template
+      dockerfile: Dockerfile
+    container_name: saas_app
+    restart: unless-stopped
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    ports:
+      - '3000:3000'
+    environment:
+      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+      STRIPE_PRICE_PRO_MONTHLY: ${STRIPE_PRICE_PRO_MONTHLY}
+      STRIPE_PRICE_PRO_YEARLY: ${STRIPE_PRICE_PRO_YEARLY}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      EMAIL_FROM: ${EMAIL_FROM}
+    networks:
+      - saas_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -qO- http://localhost:3000/api/health || exit 1']
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s

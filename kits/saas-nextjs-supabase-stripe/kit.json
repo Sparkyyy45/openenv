@@ -1,0 +1,17 @@
+{
+  "name": "saas-nextjs-supabase-stripe",
+  "version": "1.0.0",
+  "description": "Full SaaS starter: Next.js 14, Supabase auth+db, Stripe payments, Tailwind CSS",
+  "author": "openenv-core",
+  "required_ports": [3000, 5432, 54321],
+  "setup_commands": [
+    "npm install",
+    "docker-compose up -d",
+    "npm run dev"
+  ],
+  "health_check": {
+    "url": "http://localhost:3000/api/health",
+    "timeout_seconds": 30,
+    "expected_status": 200
+  }
+}
