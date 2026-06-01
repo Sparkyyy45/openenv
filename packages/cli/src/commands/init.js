@@ -215,6 +215,9 @@ export async function initCommand(kitName, options) {
       await fs.copy(envExample, envFile);
     }
 
+    // Copy kit.json so openenv doctor knows which ports to check
+    await fs.writeJson(path.join(targetDir, 'kit.json'), kit, { spaces: 2 });
+
     // Remove any .git directory from the copied template
     const copiedGit = path.join(targetDir, '.git');
     if (await fs.pathExists(copiedGit)) {
