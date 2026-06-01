@@ -9,7 +9,6 @@ Pick a kit. Run one command. Ship.
 
 [![npm version](https://img.shields.io/npm/v/openenv?color=blue&label=npm)](https://www.npmjs.com/package/openenv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Verify Kits](https://github.com/openenv/openenv/actions/workflows/verify-kits.yml/badge.svg)](https://github.com/openenv/openenv/actions/workflows/verify-kits.yml)
 
 </div>
 
