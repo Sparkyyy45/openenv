@@ -153,5 +153,26 @@ jobs:
 
       - name: Run tests
         working-directory: kits/api-fastapi-postgres-redis/template
-        run: pytest -v --tb=short
+        env:
+          APP_ENV: testing
+        run: |
+          echo "=== Python version ==="
+          python --version
+          echo "=== Installed packages ==="
+          pip list 2>&1 | head -30
+          echo "=== Testing imports ==="
+          python -c "
+          import os; os.environ['APP_ENV']='testing'
+          print('1. importing config...')
+          from app.config import settings
+          print(f'   APP_ENV={settings.APP_ENV}')
+          print('2. importing database...')
+          from app.database import engine, Base
+          print(f'   Engine URL={engine.url}')
+          print('3. importing main...')
+          from main import app
+          print('4. All imports OK')
+          "
+          echo "=== Running pytest ==="
+          pytest -v --tb=long 2>&1
 
