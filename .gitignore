@@ -11,6 +11,7 @@ test.db
 
 # Node
 node_modules/
+packages/cli/test-init/
 
 # Env
 .env

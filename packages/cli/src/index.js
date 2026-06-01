@@ -4,6 +4,7 @@ import { printHeader } from './utils/logger.js';
 import { listCommand } from './commands/list.js';
 import { initCommand } from './commands/init.js';
 import { doctorCommand } from './commands/doctor.js';
+import { deployCommand } from './commands/deploy.js';
 
 const program = new Command();
 
@@ -55,6 +56,17 @@ program
   .action(async (options) => {
     printHeader();
     await doctorCommand(options);
+  });
+
+// ── deploy ────────────────────────────────────────────────────────────────────
+program
+  .command('deploy')
+  .description('Generate deployment configs (Dockerfile, CI/CD) for your project')
+  .option('--provider <provider>', 'Cloud provider (render, railway)', 'render')
+  .option('--mock', 'Simulate deployment without real API calls', true)
+  .action(async (options) => {
+    printHeader();
+    await deployCommand(options);
   });
 
 // ── unknown command handler ───────────────────────────────────────────────────

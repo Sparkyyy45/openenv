@@ -1,0 +1,42 @@
+# ── openenv .npmignore ────────────────────────────────────────────────────────
+# Controls what gets included when users run:
+#   npm install -g Sparkyyy45/openenv
+#
+# Without this, npm falls back to .gitignore which INCLUDES kits/ and .github/
+# causing Windows path-length errors and bloating the install.
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Kit templates — fetched at runtime via git clone, not needed in the CLI package
+kits/
+
+# GitHub-specific files
+.github/
+
+# Documentation (not needed for CLI runtime)
+docs/
+
+# Development scripts
+fix_kits.py
+
+# Test artifacts
+packages/cli/test-init/
+
+# Standard ignores
+node_modules/
+.env
+.env.local
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+*.so
+test.db

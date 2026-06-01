@@ -26,6 +26,7 @@
   "scripts": {
     "dev": "node src/index.js",
     "start": "node src/index.js",
+    "test": "echo \"No tests defined yet\" && exit 0",
     "prepublishOnly": "node --input-type=module -e \"import('./src/index.js').catch(() => {})\" || true"
   },
   "dependencies": {

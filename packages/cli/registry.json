@@ -18,6 +18,22 @@
       "url": "http://localhost:8000/api/health",
       "timeout_seconds": 15,
       "expected_status": 200
+    },
+    "tags": [
+      "fastapi",
+      "python",
+      "postgres",
+      "redis",
+      "api"
+    ],
+    "repo": "https://github.com/Sparkyyy45/openenv",
+    "template_path": "kits/api-fastapi-postgres-redis/template",
+    "verified": true,
+    "last_verified": "2026-06-01T00:00:00Z",
+    "tech": {
+      "framework": "FastAPI",
+      "database": "PostgreSQL",
+      "cache": "Redis"
     }
   },
   {
@@ -143,6 +159,23 @@
       "url": "http://localhost:3000/api/health",
       "timeout_seconds": 30,
       "expected_status": 200
+    },
+    "tags": [
+      "nextjs",
+      "saas",
+      "supabase",
+      "stripe",
+      "react",
+      "tailwind"
+    ],
+    "repo": "https://github.com/Sparkyyy45/openenv",
+    "template_path": "kits/saas-nextjs-supabase-stripe/template",
+    "verified": true,
+    "last_verified": "2026-06-01T00:00:00Z",
+    "tech": {
+      "framework": "Next.js 14",
+      "auth": "Supabase",
+      "payments": "Stripe"
     }
   },
   {

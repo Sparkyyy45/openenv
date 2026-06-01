@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Full SaaS starter: Next.js 14, Supabase auth+db, Stripe payments, Tailwind CSS",
   "author": "openenv-core",
-  "required_ports": [3000, 5432, 54321],
+  "required_ports": [
+    3000,
+    5432,
+    54321
+  ],
   "setup_commands": [
     "npm install",
     "docker-compose up -d",
@@ -13,5 +17,22 @@
     "url": "http://localhost:3000/api/health",
     "timeout_seconds": 30,
     "expected_status": 200
+  },
+  "tags": [
+    "nextjs",
+    "saas",
+    "supabase",
+    "stripe",
+    "react",
+    "tailwind"
+  ],
+  "repo": "https://github.com/Sparkyyy45/openenv",
+  "template_path": "kits/saas-nextjs-supabase-stripe/template",
+  "verified": true,
+  "last_verified": "2026-06-01T00:00:00Z",
+  "tech": {
+    "framework": "Next.js 14",
+    "auth": "Supabase",
+    "payments": "Stripe"
   }
 }
