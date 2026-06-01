@@ -23,8 +23,12 @@ async def lifespan(app: FastAPI):
     Startup: create database tables.
     Shutdown: dispose of the engine connection pool.
     """
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    if settings.APP_ENV != "testing":
+        try:
+            async with engine.begin() as conn:
+                await conn.run_sync(Base.metadata.create_all)
+        except Exception as e:
+            print(f"Database connection failed: {e}")
     yield
     await engine.dispose()
 

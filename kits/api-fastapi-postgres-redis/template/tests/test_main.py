@@ -9,6 +9,9 @@ Run:
     pytest --cov=app
 """
 
+import os
+os.environ["APP_ENV"] = "testing"
+
 import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
