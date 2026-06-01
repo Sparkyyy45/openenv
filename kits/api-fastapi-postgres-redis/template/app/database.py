@@ -9,6 +9,7 @@ Usage in route handlers:
         ...
 """
 
+import os
 from collections.abc import AsyncGenerator
 
 from sqlalchemy.ext.asyncio import (
@@ -22,13 +23,23 @@ from app.config import settings
 
 
 # ── Engine ────────────────────────────────────────────────────────────────────
-engine = create_async_engine(
-    settings.DATABASE_URL,
-    echo=settings.DEBUG,
-    pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
-)
+# In testing mode, use an in-memory SQLite database so that we never
+# need asyncpg (which requires PostgreSQL C headers to compile).
+_is_testing = os.environ.get("APP_ENV") == "testing"
+
+if _is_testing:
+    engine = create_async_engine(
+        "sqlite+aiosqlite:///./test.db",
+        echo=False,
+    )
+else:
+    engine = create_async_engine(
+        settings.DATABASE_URL,
+        echo=settings.DEBUG,
+        pool_pre_ping=True,
+        pool_size=5,
+        max_overflow=10,
+    )
 
 # ── Session factory ───────────────────────────────────────────────────────────
 async_session = async_sessionmaker(
