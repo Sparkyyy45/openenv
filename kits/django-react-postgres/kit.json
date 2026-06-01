@@ -1,0 +1,27 @@
+{
+  "name": "django-react-postgres",
+  "description": "Django REST Framework backend with React frontend and Postgres",
+  "author": "openenv-core",
+  "tags": [
+    "django",
+    "react",
+    "postgres",
+    "python",
+    "docker"
+  ],
+  "repo": "https://github.com/Sparkyyy45/openenv",
+  "template_path": "kits/django-react-postgres/template",
+  "verified": true,
+  "last_verified": "2026-06-01T00:00:00Z",
+  "version": "1.0.0",
+  "required_ports": [
+    8000,
+    5173,
+    5432
+  ],
+  "tech": {
+    "backend": "Django REST",
+    "frontend": "React",
+    "database": "PostgreSQL"
+  }
+}

@@ -1,0 +1,1 @@
+{"name":"vue-firebase","scripts":{"dev":"vite"},"dependencies":{"vue":"^3.4.27","firebase":"^10.12.2"}}

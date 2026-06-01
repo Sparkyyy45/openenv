@@ -57,6 +57,12 @@ openenv doctor
 |-----|-------|-------------|
 | **[saas-nextjs-supabase-stripe](kits/saas-nextjs-supabase-stripe)** | Next.js 14 · Supabase · Stripe · Tailwind | Full SaaS starter with auth, payments, and dashboard |
 | **[api-fastapi-postgres-redis](kits/api-fastapi-postgres-redis)** | FastAPI · PostgreSQL · Redis · SQLAlchemy | Production API with async CRUD, caching, and tests |
+| **[mern-stack-auth](kits/mern-stack-auth)** | React · Express.js · MongoDB | MERN Stack with JWT Auth and Docker MongoDB |
+| **[t3-app-router](kits/t3-app-router)** | Next.js 14 · Prisma · tRPC | T3 Stack: Next.js 14, Tailwind, Prisma, tRPC |
+| **[django-react-postgres](kits/django-react-postgres)** | Django · React · PostgreSQL | Django REST Framework backend with React frontend and Postgres |
+| **[go-gin-postgres-api](kits/go-gin-postgres-api)** | Go · Gin · PostgreSQL | High performance Go API with Gin and PostgreSQL |
+| **[vue-vite-firebase](kits/vue-vite-firebase)** | Vue 3 · Vite · Firebase | Vue 3 serverless frontend with Firebase auth and database |
+| **[express-prisma-sqlite](kits/express-prisma-sqlite)** | Express.js · Prisma · SQLite | Fastest Node.js API setup with Express, Prisma and local SQLite |
 
 > Want to see more? [Submit a kit →](.github/ISSUE_TEMPLATE/submit-kit.md)
 

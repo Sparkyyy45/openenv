@@ -1,0 +1,28 @@
+{
+  "name": "t3-app-router",
+  "description": "T3 Stack: Next.js 14, Tailwind, Prisma, tRPC",
+  "author": "openenv-core",
+  "tags": [
+    "t3",
+    "nextjs",
+    "trpc",
+    "prisma",
+    "tailwind",
+    "typescript"
+  ],
+  "repo": "https://github.com/Sparkyyy45/openenv",
+  "template_path": "kits/t3-app-router/template",
+  "verified": true,
+  "last_verified": "2026-06-01T00:00:00Z",
+  "version": "1.0.0",
+  "required_ports": [
+    3000,
+    5432
+  ],
+  "tech": {
+    "framework": "Next.js 14 App Router",
+    "database": "PostgreSQL",
+    "orm": "Prisma",
+    "styling": "Tailwind CSS"
+  }
+}

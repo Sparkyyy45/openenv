@@ -1,0 +1,25 @@
+{
+  "name": "vue-vite-firebase",
+  "description": "Vue 3 serverless frontend with Firebase auth and database",
+  "author": "openenv-core",
+  "tags": [
+    "vue",
+    "vite",
+    "firebase",
+    "serverless",
+    "tailwind"
+  ],
+  "repo": "https://github.com/Sparkyyy45/openenv",
+  "template_path": "kits/vue-vite-firebase/template",
+  "verified": true,
+  "last_verified": "2026-06-01T00:00:00Z",
+  "version": "1.0.0",
+  "required_ports": [
+    5173
+  ],
+  "tech": {
+    "frontend": "Vue 3",
+    "backend": "Firebase",
+    "styling": "Tailwind CSS"
+  }
+}

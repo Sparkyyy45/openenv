@@ -1,0 +1,24 @@
+{
+  "name": "express-prisma-sqlite",
+  "description": "Fastest Node.js API setup with Express, Prisma and local SQLite",
+  "author": "openenv-core",
+  "tags": [
+    "express",
+    "prisma",
+    "sqlite",
+    "node"
+  ],
+  "repo": "https://github.com/Sparkyyy45/openenv",
+  "template_path": "kits/express-prisma-sqlite/template",
+  "verified": true,
+  "last_verified": "2026-06-01T00:00:00Z",
+  "version": "1.0.0",
+  "required_ports": [
+    3000
+  ],
+  "tech": {
+    "framework": "Express.js",
+    "orm": "Prisma",
+    "database": "SQLite"
+  }
+}

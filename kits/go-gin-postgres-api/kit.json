@@ -1,0 +1,25 @@
+{
+  "name": "go-gin-postgres-api",
+  "description": "High performance Go API with Gin and PostgreSQL",
+  "author": "openenv-core",
+  "tags": [
+    "go",
+    "gin",
+    "postgres",
+    "api"
+  ],
+  "repo": "https://github.com/Sparkyyy45/openenv",
+  "template_path": "kits/go-gin-postgres-api/template",
+  "verified": true,
+  "last_verified": "2026-06-01T00:00:00Z",
+  "version": "1.0.0",
+  "required_ports": [
+    8080,
+    5432
+  ],
+  "tech": {
+    "language": "Go",
+    "framework": "Gin",
+    "database": "PostgreSQL"
+  }
+}

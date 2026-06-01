@@ -9,7 +9,7 @@ import { logger } from '../utils/logger.js';
  * @returns {string}
  */
 function formatTags(tags) {
-  return tags
+  return (tags || [])
     .slice(0, 5)
     .map((t) => chalk.dim(`[${t}]`))
     .join(' ');
@@ -56,7 +56,7 @@ export async function listCommand(options) {
 
   // Filter by tag if provided
   if (options.tag) {
-    kits = kits.filter((k) => k.tags.includes(options.tag));
+    kits = kits.filter((k) => (k.tags || []).includes(options.tag));
   }
 
   // JSON output for scripting
