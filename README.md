@@ -7,7 +7,6 @@
 Stop rebuilding auth, payments, and infrastructure from scratch.
 Pick a kit. Run one command. Ship.
 
-[![npm version](https://img.shields.io/npm/v/openenv?color=blue&label=npm)](https://www.npmjs.com/package/openenv)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 </div>
@@ -37,8 +36,8 @@ openenv is an **open registry of production-ready starter kits** with a CLI that
 ## ⚡ Quick Start
 
 ```bash
-# Install globally
-npm install -g openenv
+# Install globally directly from GitHub
+npm install -g Sparkyyy45/openenv
 
 # See available kits
 openenv list
@@ -156,6 +155,6 @@ MIT — see [LICENSE](LICENSE).
 
 **Built with ❤️ by the openenv community**
 
-[Website](https://openenv.dev) · [npm](https://www.npmjs.com/package/openenv) · [GitHub](https://github.com/openenv/openenv)
+[Website](https://openenv.dev) · [GitHub](https://github.com/Sparkyyy45/openenv)
 
 </div>
