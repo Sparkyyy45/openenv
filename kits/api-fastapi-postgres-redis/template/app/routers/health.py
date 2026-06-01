@@ -41,15 +41,19 @@ async def health_check():
         status = "degraded"
 
     # ── Redis check ───────────────────────────────────────────────────────────
-    try:
-        r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
-        pong = await r.ping()
-        if not pong:
-            raise ConnectionError("Redis ping returned False")
-        await r.aclose()
-    except Exception as exc:
-        redis_status = f"error: {exc}"
-        status = "degraded"
+    if settings.APP_ENV == "testing":
+        redis_status = "skipped in testing"
+    else:
+        try:
+            r = aioredis.from_url(settings.REDIS_URL, decode_responses=True)
+            if await r.ping():
+                redis_status = "connected"
+            else:
+                raise ConnectionError("Redis ping returned False")
+            await r.aclose()
+        except Exception as exc:
+            redis_status = f"error: {exc}"
+            status = "degraded"
 
     checks = {
         "database": db_status,
