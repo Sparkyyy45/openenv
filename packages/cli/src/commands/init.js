@@ -59,6 +59,12 @@ export async function initCommand(kitName, options) {
 
   // ── Step 0: Interactive picker if no kit name ────────────────────────────
   if (!kitName) {
+    if (!process.stdout.isTTY) {
+      logger.error('No kit name provided in a non-interactive environment.');
+      logger.step(`Example: ${chalk.cyan('openenv init <kit-name>')}`);
+      process.exit(1);
+    }
+
     const loadSpinner = ora({ text: 'Loading available kits...', color: 'cyan' }).start();
     let kits = [];
     try {
@@ -178,9 +184,23 @@ export async function initCommand(kitName, options) {
 
   // ── Step 5: Clone kit template ───────────────────────────────────────────
   const tempDir = path.join(os.tmpdir(), `openenv-${Date.now()}`);
+
   const spinner3 = ora({ text: `Cloning kit template...`, color: 'cyan' }).start();
 
   try {
+    // Ensure Git is installed before attempting to clone
+    const { exec } = await import('node:child_process');
+    const { promisify } = await import('node:util');
+    const execAsync = promisify(exec);
+    
+    try {
+      await execAsync('git --version');
+    } catch (gitErr) {
+      spinner3.fail(chalk.red('Git is not installed or not in your PATH.'));
+      logger.step('Please install Git to use openenv: https://git-scm.com/downloads');
+      process.exit(1);
+    }
+
     const git = simpleGit();
     await git.clone(kit.repo, tempDir, ['--depth=1']);
     spinner3.succeed(chalk.green('Kit template cloned'));
@@ -199,13 +219,22 @@ export async function initCommand(kitName, options) {
     const templateSrc = path.join(tempDir, kit.template_path || 'template');
     const srcExists = await fs.pathExists(templateSrc);
 
-    if (srcExists) {
-      await fs.copy(templateSrc, targetDir);
-    } else {
-      // Fallback: copy the whole cloned dir (minus .git)
-      await fs.copy(tempDir, targetDir, {
-        filter: (src) => !src.includes(`${path.sep}.git`),
-      });
+    try {
+      if (srcExists) {
+        await fs.copy(templateSrc, targetDir);
+      } else {
+        // Fallback: copy the whole cloned dir (minus .git)
+        await fs.copy(tempDir, targetDir, {
+          filter: (src) => !src.includes(`${path.sep}.git`),
+        });
+      }
+    } catch (fsErr) {
+      if (fsErr.code === 'EACCES' || fsErr.code === 'EPERM') {
+        throw new Error(`Permission denied when writing to ${targetDir}. Try running with elevated privileges.`);
+      } else if (fsErr.code === 'ENOSPC') {
+        throw new Error('Not enough disk space to initialize the kit.');
+      }
+      throw fsErr;
     }
 
     // Copy .env.example → .env (never overwrite existing .env)
@@ -229,7 +258,7 @@ export async function initCommand(kitName, options) {
     await projectGit.init();
 
     // Cleanup temp clone
-    await fs.remove(tempDir);
+    await fs.remove(tempDir).catch(() => {});
 
     spinner4.succeed(chalk.green('Project setup complete'));
   } catch (err) {

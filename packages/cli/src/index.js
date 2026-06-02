@@ -1,10 +1,48 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
+import chalk from 'chalk';
+import boxen from 'boxen';
 import { printHeader } from './utils/logger.js';
 import { listCommand } from './commands/list.js';
 import { initCommand } from './commands/init.js';
 import { doctorCommand } from './commands/doctor.js';
 import { deployCommand } from './commands/deploy.js';
+
+// ── Node Version Check ────────────────────────────────────────────────────────
+const nodeVersion = process.version;
+const majorVersion = parseInt(nodeVersion.replace('v', '').split('.')[0], 10);
+if (majorVersion < 18) {
+  console.error(chalk.red(`\n  ✗ openenv requires Node.js v18 or higher (you have ${nodeVersion})`));
+  console.error(chalk.yellow(`  Please upgrade Node.js: https://nodejs.org/en/download/\n`));
+  process.exit(1);
+}
+
+// ── Global Error Handling ─────────────────────────────────────────────────────
+function handleError(err) {
+  const isDebug = process.env.DEBUG === 'true';
+  const content = [
+    chalk.bold.red('✗ openenv encountered an unexpected error'),
+    '',
+    chalk.white(err.message || err.toString()),
+    '',
+    isDebug ? chalk.dim(err.stack) : chalk.dim('Run with DEBUG=true to see the full stack trace.'),
+    '',
+    chalk.dim('Please report this issue: https://github.com/Sparkyyy45/openenv/issues')
+  ].join('\n');
+
+  console.error(
+    boxen(content, {
+      padding: { top: 1, bottom: 1, left: 2, right: 2 },
+      margin: { top: 1, bottom: 1, left: 0, right: 0 },
+      borderStyle: 'round',
+      borderColor: 'red',
+    })
+  );
+  process.exit(1);
+}
+
+process.on('uncaughtException', handleError);
+process.on('unhandledRejection', handleError);
 
 const program = new Command();
 
@@ -39,7 +77,7 @@ program
 
 // ── init ──────────────────────────────────────────────────────────────────────
 program
-  .command('init [kit-name]')
+  .command('init [kit-name]', { isDefault: true })
   .description('Scaffold a production-ready kit into the current directory')
   .option('--dir <path>', 'Target directory (defaults to ./<kit-name>)')
   .option('--dry-run', 'Preview what would happen without touching disk')

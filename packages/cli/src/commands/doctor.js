@@ -51,9 +51,9 @@ function isPortFree(port) {
  */
 function killPortCmd(port) {
   if (isWindows) {
-    return `Get-Process -Id (Get-NetTCPConnection -LocalPort ${port}).OwningProcess | Stop-Process`;
+    return `Get-Process -Id (Get-NetTCPConnection -LocalPort ${port}).OwningProcess | Stop-Process  (Run as Administrator)`;
   }
-  return `lsof -ti:${port} | xargs kill -9`;
+  return `lsof -ti:${port} | xargs kill -9 2>/dev/null || true`;
 }
 
 /**
@@ -147,7 +147,7 @@ async function checkDockerInstalled() {
     passed: result.success,
     label: result.success
       ? `Docker ${version} — installed`
-      : 'Docker not found',
+      : 'Docker CLI not found or not in PATH',
     fix: result.success
       ? undefined
       : 'Install Docker Desktop: https://docs.docker.com/get-docker/',
